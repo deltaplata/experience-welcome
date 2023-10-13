@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Experience Welcome</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <style>
+      *, *::after, *::before {
+        box-sizing: border-box;
+      }
+      html, body {
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        font-family: Helvetica, sans-serif;
+        margin: 0;
+      }
+      .body {
+        height: calc(100% - 46px);
+        display: flex;
+        background: #1D2025;
+      }
+      .body__middle {
+        flex: 1 0 0;
+        width: 100%;
+        max-width: 100%;
+        display: inline-flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .chat {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 254px;
+        background: #23272D;
+        color: white;
+        font-size: 36px;
+        font-weight: 700;
+      }
+      .green-room {
+        display: flex;
+        padding: 20px 15px 24px;
+        border-top: 1px solid #303136;
+      }
+      .green-room__left {
+        flex: 0 0 auto;
+        width: auto;
+        font-size: 12px;
+        color: #6AE594;
+      }
+      .green-room__middle {
+        display: flex;
+        flex: 1 0 0;
+        width: 100%;
+        max-width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+      .green-room__middle-person {
+        height: 92px;
+        position: relative;
+        border: 3px solid #191C21;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        user-select: none;
+      }
+      .green-room__middle-person img, .green-room__middle-person video {
+        width: auto;
+        height: 100%;
+      }
+      .green-room__right {
+        flex: 0 0 auto;
+        width: auto;
+      }
+      .green-room__right-button {
+        width: 38px;
+        height: 38px;
+        transition: 150ms ease-in-out;
+        color: white;
+        background: #181A1D;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .green-room__right-button:hover {
+        background: #6369F3;
+      }
+      .header {
+        background: white;
+        display: flex;
+        height: 46px;
+        align-items: center;
+        padding-right: 10px;
+        padding-left: 15px;
+      }
+      .header__left {
+        align-items: center;
+        display: inline-flex;
+        gap: 10px;
+      }
+      .header__left-icon {
+        width: 26px;
+        height: 26px;
+        background: white;
+        border: 1px solid #D6D6D6;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        appearance: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .header__left-title {
+        font-size: 18px;
+        color: black;
+        font-weight: 400;
+      }
+      .header__middle {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-flex;
+        height: 100%;
+      }
+      .header__middle-link {
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        height: 100%;
+        padding-left: 42px;
+        padding-right: 42px;
+        color: black;
+        display: inline-flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 300;
+        border-top: 2px solid transparent;
+      }
+      .header__middle-link--active {
+        border-bottom-color: #5D6BF6;
+        font-weight: 400;
+      }
+      .header__right {
+        background: #F7F7F7;
+        border: 1px solid #E4E4E4;
+        padding: 2px;
+        border-radius: 15px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .header__right-avatar {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+      }
+      .header__right-button {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        display: inline-flex;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #18191B;
+      }
+      .header__right-icon {
+        font-size: 12px;
+      }
+      .media {
+        border-right: 1px solid #303136;
+        width: 232px;
+      }
+      .media__body {
+      }
+      .media__header {
+        height: 60px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 15px;
+        border-bottom: 1px solid #303136;
+      }
+      .media__project {
+        color: white;
+        appearance: none;
+        background: transparent;
+        padding: 0;
+        border: none;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        cursor: pointer;
+      }
+      .media__project-icon {
+        font-size: 10px;
+      }
+      .media__project-text {
+        font-size: 12px;
+      }
+      .media__session {
+        color: #909095;
+        appearance: none;
+        background: transparent;
+        padding: 0;
+        border: none;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        cursor: pointer;
+      }
+      .media__session-icon {
+        font-size: 14px;
+      }
+      .media__session-text {
+        font-size: 12px;
+      }
+      .panel {
+        position: relative;
+        border-bottom: 1px solid #303136;
+      }
+      .panel--open {
+        position: relative;
+      }
+      .panel__action {
+        position: relative;
+      }
+      .panel__action-button {
+        appearance: none;
+        background: #3A3D43;
+        color: #FFFFFF;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        font-size: 14px;
+      }
+      .panel__add {
+        position: relative;
+      }
+      .panel__add-button {
+        border: 1px dashed #3A3D43;
+        color: #C0C1C2;
+        padding: 10px 0;
+        font-size: 10px;
+        cursor: pointer;
+        width: 100%;
+        background: transparent;
+        border-radius: 6px;
+      }
+      .panel__body {
+        padding: 4px 10px 54px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .panel__header {
+        display: inline-flex;
+        gap: 6px;
+        color: white;
+        padding: 16px 6px;
+        width: 100%;
+        align-items: center;
+      }
+      .panel__header-icon {
+        width: 12px;
+        height: 12px;
+        color: white;
+        background: #323439;
+        border-radius: 50%;
+        appearance: none;
+        border: 0;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        cursor: pointer;
+      }
+      .panel__header-icon i {
+        display: inline-flex;
+      }
+      .panel__header-icon--open {
+        background: #01EA8C;
+        color: black;
+      }
+      .panel__info {
+        flex: 1 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-left: 8px;
+      }
+      .panel__info-headline {
+        font-size: 10px;
+        color: #F7F7F7;
+      }
+      .panel__info-subtitle {
+        font-size: 10px;
+        color: #76777D;
+      }
+      .panel__name {
+        font-size: 12px;
+      }
+      .panel__preview {
+        height: 48px;
+        width: 74px;
+      }
+      .panel__preview img {
+        height: 100%;
+        width: 100%;
+      }
+      .panel__tool {
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid #45474C;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background: #292C33;
+        padding-right: 10px;
+      }
+      .stage {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+        flex: 1 0 0;
+      }
+      .stage__container-inner {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+      }
+      .stage__container-inner video {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .stage__container-outer {
+        position: relative;
+        flex: 1 0 0;
+        width: 100%;
+      }
+      .stage__header {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+      .stage__header-button {
+        padding: 12px 16px;
+        border-radius: 6px;
+        color: white;
+        font-size: 12px;
+        background: #292C33;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.25px;
+        gap: 10px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .stage__header-button--recording::before {
+        content: '';
+        width: 14px;
+        height: 14px;
+        background: #EB5C5C;
+        display: inline-block;
+        border-radius: 50%;
+        border: 3px solid rgba(41, 44, 51, 0.75);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header__left">
+        <div class="header__left-title">Scaling Content in 2023</div>
+        <button class="header__left-icon">
+          <i class="bi bi-link-45deg"></i>
+        </button>
+      </div>
+      <div class="header__middle">
+        <a class="header__middle-link" href="#">Mission</a>
+        <a class="header__middle-link header__middle-link--active" href="#">Meeting</a>
+        <a class="header__middle-link" href="#">Notes</a>
+        <a class="header__middle-link" href="#">Brand Kit</a>
+      </div>
+      <div class="header__right">
+        <button class="header__right-button">
+          <i class="bi bi-grid-1x2 header__right-icon"></i>
+        </button>
+        <button class="header__right-button">
+          <i class="bi bi-question-circle header__right-icon"></i>
+        </button>
+        <button class="header__right-button">
+          <i class="bi bi-clipboard-pulse header__right-icon"></i>
+        </button>
+        <button class="header__right-button">
+          <img class="header__right-avatar" alt="Profile" src="/avatar.jpg">
+        </button>
+      </div>
+    </div>
+    <div class="body">
+      <div class="media">
+        <div class="media__header">
+          <button class="media__project">
+            <span class="media__project-text">Agenda</span>
+            <i class="bi bi-chevron-down media__project-icon"></i>
+          </button>
+          <button class="media__session">
+            <i class="bi bi-plus media__session-icon"></i>
+            <span class="media__session-text">New session</span>
+          </button>
+        </div>
+        <div class="media__body">
+          <div class="panel panel--open">
+            <div class="panel__header">
+              <button class="panel__header-icon panel__header-icon--open">
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <div class="panel__name">
+                Welcome
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool1.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Timer</div>
+                  <div class="panel__info-subtitle">Overlay</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool2.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Intro Video</div>
+                  <div class="panel__info-subtitle">Video &middot; 03:26</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-play-fill"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool3.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Quality Chart</div>
+                  <div class="panel__info-subtitle">Overlay</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool4.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Growth Poll</div>
+                  <div class="panel__info-subtitle">Poll</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool5.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Call to Action</div>
+                  <div class="panel__info-subtitle">Overlay</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__tool">
+                <div class="panel__preview">
+                  <img alt="Panel Preview" src="/tool6.jpg">
+                </div>
+                <div class="panel__info">
+                  <div class="panel__info-headline">Squiggles</div>
+                  <div class="panel__info-subtitle">Background</div>
+                </div>
+                <div class="panel__action">
+                  <button class="panel__action-button">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="panel__add">
+                <button class="panel__add-button">Add to session</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__header">
+              <button class="panel__header-icon">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+              <div class="panel__name">
+                Panels Discussion
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__header">
+              <button class="panel__header-icon">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+              <div class="panel__name">
+                Q&A
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__header">
+              <button class="panel__header-icon">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+              <div class="panel__name">
+                Thank you!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="body__middle">
+        <div class="stage">
+          <div class="stage__header">
+            <button class="stage__header-button stage__header-button--recording">Recording</button>
+            <button class="stage__header-button">Close Doors</button>
+          </div>
+          <div class="stage__container-outer">
+            <div class="stage__container-inner">
+              <video autoplay loop muted width="1514" height="854">
+                <source src="/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+        <div class="green-room">
+          <div class="green-room__left">Green Room</div>
+          <div class="green-room__middle">
+            <div class="green-room__middle-person">
+              <img alt="Green Room Person" src="/person1.jpg">
+            </div>
+            <div class="green-room__middle-person">
+              <video autoplay loop muted width="860" height="514">
+                <source src="/person2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="green-room__middle-person">
+              <video autoplay loop muted width="870" height="532">
+                <source src="/person3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          <div class="green-room__right">
+            <button class="green-room__right-button">
+              <i class="bi bi-laptop-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="chat">
+        Chat
+      </div>
+    </div>
+  </body>
+</html>
